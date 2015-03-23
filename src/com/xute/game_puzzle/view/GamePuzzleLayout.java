@@ -70,6 +70,7 @@ public class GamePuzzleLayout extends RelativeLayout implements OnClickListener 
 
     private boolean isGameSuccess;
     private boolean isGameOver;
+    private boolean isPause;
 
     private int mLevel = 1;
 
@@ -99,7 +100,7 @@ public class GamePuzzleLayout extends RelativeLayout implements OnClickListener 
                     }
                     break;
                 case TIME_CHANGED:
-                    if (isGameOver || isGameSuccess) {
+                    if (isGameOver || isGameSuccess || isPause) {
                         return;
                     }
                     if (mListener != null) {
@@ -293,6 +294,24 @@ public class GamePuzzleLayout extends RelativeLayout implements OnClickListener 
         }
     }
 
+    public void restart() {
+        isGameOver = false;
+        mColumn--;
+        nextLevel();
+    }
+    
+    public void pause() {
+        isPause = true;
+        mHandler.removeMessages(TIME_CHANGED);
+    }
+    
+    public void resume() {
+        if (isPause) {
+            isPause = false;
+            mHandler.sendEmptyMessage(TIME_CHANGED);
+        }
+    }
+    
     public void nextLevel() {
         this.removeAllViews();
         mAnimLayout = null;

@@ -58,7 +58,7 @@ public class MainActivity extends Activity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // TODO Auto-generated method stub
-                        mPuzzleLayout.nextLevel();
+                        mPuzzleLayout.restart();
                     }
                 }).setNegativeButton("QUIT", new OnClickListener() {
                     
@@ -70,6 +70,18 @@ public class MainActivity extends Activity {
                 }).show();
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mPuzzleLayout.resume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mPuzzleLayout.pause();
     }
 
 }
